@@ -45,3 +45,28 @@ export async function createGuestSession() {
     throw new Error(error)
   }
 }
+
+export async function rateMovie(movieId, rate, guestSessionId) {
+  try {
+    const response = await axios.post(
+      `${apiBase}movie/${movieId}/rating?api_key=${apiKey}&guest_session_id=${guestSessionId}`,
+      {
+        value: rate,
+      }
+    )
+    return response
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+export async function getRatedMovies(guestSessionId) {
+  try {
+    const response = await axios.get(
+      `${apiBase}guest_session/${guestSessionId}/rated/movies?api_key=${apiKey}&language=en-US`
+    )
+    return response.data
+  } catch (error) {
+    throw new Error(error)
+  }
+}

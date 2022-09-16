@@ -1,24 +1,24 @@
 import { useEffect, useState } from 'react'
-import { Spin, Alert } from 'antd'
+import { Spin, Alert, Tabs } from 'antd'
 
-import { getMovies, getPage, getGenres, createGuestSession } from './services/movie-api'
+import { getMovies, getPage, getGenres, createGuestSession, getRatedMovies } from './services/movie-api'
 import MovieList from './components/MovieList'
 import SearchMovie from './components/SearchMovie'
-import TabPanel from './components/TabPanel'
 import PaginationBlock from './components/PaginationBlock'
-import { MovieDBProvider } from './components/MovieDbContext'
+import Context from './components/MovieDbContext'
 
 import 'antd/dist/antd.min.css'
 import './App.css'
 
 function App() {
   const [movies, setMovies] = useState([])
+  const [ratedMovies, setRatedMovies] = useState([])
   const [isLoading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const [results, setResults] = useState(0)
   const [search, setSearch] = useState('return')
   const [genres, setGenres] = useState([])
-  const [, setGuestSession] = useState(null)
+  const [guestSession, setGuestSession] = useState(null)
 
   useEffect(() => {
     getMovies(search)
@@ -67,15 +67,41 @@ function App() {
     return <Alert message={error.message} description="Description" type="error" showIcon />
   }
 
+  const searchComponent = (
+    <>
+      <SearchMovie searchMovies={searchMoviesHandler} />
+      {isLoading ? <Spin size="large" /> : <MovieList movies={movies} guestSessionId={guestSession} />}
+      <PaginationBlock changePages={changePagesHandler} search={search} results={results} />
+    </>
+  )
+
+  const ratedComponent = !ratedMovies.length ? <h1>Rate films</h1> : <MovieList movies={ratedMovies} />
+
+  const tabsOnChangeHandler = (activeKey) => {
+    if (activeKey === 'rated') {
+      if (!guestSession) {
+        return
+      }
+      getRatedMovies(guestSession)
+        .then((movies) => {
+          setRatedMovies(movies.results)
+          setLoading(false)
+        })
+        .catch((error) => setError(error))
+    }
+  }
+
+  const items = [
+    { label: 'Search', key: 'search', children: searchComponent },
+    { label: 'Rated', key: 'rated', children: ratedComponent },
+  ]
+
   return (
-    <MovieDBProvider value={genres}>
+    <Context.Provider value={{ genres }}>
       <div className="container">
-        <TabPanel />
-        <SearchMovie searchMovies={searchMoviesHandler} />
-        {isLoading ? <Spin size="large" /> : <MovieList movies={movies} />}
-        <PaginationBlock changePages={changePagesHandler} search={search} results={results} />
+        <Tabs onChange={tabsOnChangeHandler} centered defaultActiveKey="1" items={items} />
       </div>
-    </MovieDBProvider>
+    </Context.Provider>
   )
 }
 

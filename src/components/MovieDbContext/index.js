@@ -1,3 +1,3 @@
-import { MovieDBProvider, MovieDBConsumer } from './MovieDbContext'
+import Context from './MovieDbContext'
 
-export { MovieDBProvider, MovieDBConsumer }
+export default Context

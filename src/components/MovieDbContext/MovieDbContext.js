@@ -1,5 +1,5 @@
-import React from 'react'
+import { createContext } from 'react'
 
-const { Provider: MovieDBProvider, Consumer: MovieDBConsumer } = React.createContext()
+const Context = createContext()
 
-export { MovieDBProvider, MovieDBConsumer }
+export default Context
