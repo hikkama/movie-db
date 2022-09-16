@@ -1,5 +1,3 @@
-/* eslint-disable  no-unused-vars */
-
 import React, { useEffect, useState } from 'react'
 import { Image, Rate } from 'antd'
 
@@ -13,7 +11,6 @@ import styles from './Movie.module.css'
 
 function Movie({ title, date, tags, overview, poster, vote, id, guestSessionId, userRating }) {
   const [rating, setRating] = useState(null)
-  const [render, setRender] = useState(false)
 
   let voteClass = styles.vote
 
@@ -24,7 +21,9 @@ function Movie({ title, date, tags, overview, poster, vote, id, guestSessionId, 
 
   useEffect(() => {
     if (rating) {
-      rateMovie(id, rating, guestSessionId).then((res) => console.log(res))
+      rateMovie(id, rating, guestSessionId)
+        .then((res) => res)
+        .catch((error) => console.error(error))
     }
   }, [rating])
 
