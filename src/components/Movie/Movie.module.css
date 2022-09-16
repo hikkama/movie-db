@@ -1,0 +1,68 @@
+.card {
+  display: grid;
+  grid-template-columns: 183px 1fr;
+
+  height: 281px;
+  overflow-y: auto;
+
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.cardImg {
+  height: 100%;
+}
+
+.cardInfo {
+  position: relative;
+  padding: 10px 20px 0 20px;
+}
+
+.cardTitle {
+  margin: 0 0 7px 0;
+  font-size: 20px;
+  line-height: 28px;
+  width: 87%;
+}
+
+.cardDate {
+  font-size: 12px;
+  color: #827e7e;
+}
+
+.cardText {
+  font-size: 12px;
+  margin: 0;
+}
+
+.cardRate {
+  font-size: 15px;
+  margin: 7px 0;
+}
+
+.vote {
+  width: 40px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 40px;
+  border: 2px solid;
+  border-radius: 50%;
+  padding: 7px;
+  grid-area: vote;
+  margin: 12px 9px;
+}
+
+.red {
+  border-color: #e90000;
+}
+
+.orange {
+  border-color: #e97e00;
+}
+
+.yellow {
+  border-color: #e9d100;
+}
+.green {
+  border-color: #66e900;
+}
