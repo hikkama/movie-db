@@ -5,10 +5,10 @@
   height: 281px;
   overflow-y: auto;
 
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.cardImg {
+img.cardImg {
   height: 100%;
 }
 
@@ -34,7 +34,7 @@
   margin: 0;
 }
 
-.cardRate {
+ul.cardRate {
   font-size: 15px;
   margin: 7px 0;
 }

@@ -2,8 +2,6 @@ import React, { useCallback, useState } from 'react'
 import { Input } from 'antd'
 import { debounce } from 'lodash'
 
-import styles from './SearchMovie.module.css'
-
 function SearchMovie({ searchMovies }) {
   const [inputValue, setInputValue] = useState('')
 
@@ -14,9 +12,7 @@ function SearchMovie({ searchMovies }) {
     debounceFn(event.target.value)
   }
 
-  return (
-    <Input className={styles.searchInput} placeholder="Type to search..." value={inputValue} onChange={handleChange} />
-  )
+  return <Input placeholder="Type to search..." value={inputValue} onChange={handleChange} />
 }
 
 export default SearchMovie
