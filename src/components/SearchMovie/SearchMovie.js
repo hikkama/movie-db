@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react'
 import { Input } from 'antd'
 import { debounce } from 'lodash'
+import PropTypes from 'prop-types'
 
 function SearchMovie({ searchMovies }) {
   const [inputValue, setInputValue] = useState('')
@@ -13,6 +14,10 @@ function SearchMovie({ searchMovies }) {
   }
 
   return <Input placeholder="Type to search..." value={inputValue} onChange={handleChange} />
+}
+
+SearchMovie.propTypes = {
+  searchMovies: PropTypes.func.isRequired,
 }
 
 export default SearchMovie

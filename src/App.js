@@ -38,8 +38,8 @@ function App() {
     getGenres().then((res) => setGenres(res.genres))
   }, [])
 
-  if (error) {
-    return <Alert message={error.message} description="Description" type="error" showIcon />
+  const errorHandler = (e) => {
+    setError(e)
   }
 
   const changePagesHandler = (searchQuery, page) => {
@@ -100,9 +100,7 @@ function App() {
     <>
       <SearchMovie searchMovies={searchMoviesHandler} />
       {isLoading ? <Spin size="large" /> : <MovieList movies={movies} guestSessionId={guestSession} />}
-      {ratedMoviesResults > 19 && (
-        <PaginationBlock changePages={changePagesHandler} search={search} results={results} />
-      )}
+      <PaginationBlock changePages={changePagesHandler} search={search} results={results} />
     </>
   )
 
@@ -120,7 +118,13 @@ function App() {
     { label: 'Rated', key: 'rated', children: ratedComponent },
   ]
 
-  const contextProviderValue = useMemo(() => ({ genres }), [genres])
+  const contextProviderValue = useMemo(() => ({ genres, errorHandler }), [genres])
+
+  if (error) {
+    return (
+      <Alert message="Please refresh the page and try again later" description={error.message} type="error" showIcon />
+    )
+  }
 
   return (
     <Context.Provider value={contextProviderValue}>

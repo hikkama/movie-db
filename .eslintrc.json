@@ -40,7 +40,7 @@
         "quotes": ["error", "single"],
         "semi": ["error", "never"],
         "react/react-in-jsx-scope": "off",
-        "react/prop-types": 0,
+        "react/prop-types": 2,
         "react/require-default-props": [2, {
             "functions": "defaultArguments"
         }],

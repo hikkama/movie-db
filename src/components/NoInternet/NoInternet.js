@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Alert } from 'antd'
+import PropTypes from 'prop-types'
 
 function NoInternetConnection({ children }) {
   const [isOnline, setOnline] = useState(true)
@@ -27,6 +28,10 @@ function NoInternetConnection({ children }) {
       showIcon
     />
   )
+}
+
+NoInternetConnection.propTypes = {
+  children: PropTypes.node.isRequired,
 }
 
 export default NoInternetConnection

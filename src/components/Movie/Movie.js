@@ -1,16 +1,29 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import PropTypes from 'prop-types'
 import { Image, Rate } from 'antd'
 
 import shortenText from '../../utils/shortenText'
 import formatDate from '../../utils/formatDate'
 import Genre from '../Genre'
-import coverImg from '../../img/AvgrHw6YEehlNxVZNVDoVz2Huht.jpg'
 import { rateMovie } from '../../services/movie-api'
+import Context from '../MovieDbContext'
+import coverImg from '../../img/AvgrHw6YEehlNxVZNVDoVz2Huht.jpg'
 
 import styles from './Movie.module.css'
 
-function Movie({ title, date, tags, overview, poster, vote, id, guestSessionId, userRating }) {
+function Movie({
+  title,
+  date = '',
+  tags = [],
+  overview = '',
+  poster = null,
+  vote = 0,
+  id,
+  guestSessionId = '',
+  userRating = 0,
+}) {
   const [rating, setRating] = useState(null)
+  const { errorHandler } = useContext(Context)
 
   let voteClass = styles.vote
 
@@ -23,7 +36,7 @@ function Movie({ title, date, tags, overview, poster, vote, id, guestSessionId, 
     if (rating) {
       rateMovie(id, rating, guestSessionId)
         .then((res) => res)
-        .catch((error) => console.error(error))
+        .catch((error) => errorHandler(error))
       sessionStorage.setItem(id, rating)
     }
   }, [rating])
@@ -56,6 +69,18 @@ function Movie({ title, date, tags, overview, poster, vote, id, guestSessionId, 
       </div>
     </div>
   )
+}
+
+Movie.propTypes = {
+  title: PropTypes.string.isRequired,
+  date: PropTypes.string,
+  tags: PropTypes.arrayOf(PropTypes.number),
+  overview: PropTypes.string,
+  poster: PropTypes.string,
+  vote: PropTypes.number,
+  id: PropTypes.number.isRequired,
+  guestSessionId: PropTypes.string,
+  userRating: PropTypes.number,
 }
 
 export default Movie

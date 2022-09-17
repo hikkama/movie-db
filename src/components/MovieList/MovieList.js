@@ -1,10 +1,11 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import Movie from '../Movie'
 
 import styles from './MovieList.module.css'
 
-function MovieList({ movies, guestSessionId }) {
+function MovieList({ movies, guestSessionId = '' }) {
   return movies.length ? (
     <div className={styles.movieList}>
       {movies.map((movie) => {
@@ -37,6 +38,28 @@ function MovieList({ movies, guestSessionId }) {
   ) : (
     <h1>No results</h1>
   )
+}
+
+MovieList.propTypes = {
+  movies: PropTypes.arrayOf(
+    PropTypes.shape({
+      adult: PropTypes.bool,
+      backdrop_path: PropTypes.string,
+      genre_ids: PropTypes.arrayOf(PropTypes.number),
+      id: PropTypes.number,
+      original_language: PropTypes.string,
+      original_title: PropTypes.string,
+      overview: PropTypes.string,
+      popularity: PropTypes.number,
+      poster_path: PropTypes.string,
+      release_date: PropTypes.string,
+      title: PropTypes.string,
+      video: PropTypes.bool,
+      vote_average: PropTypes.number,
+      vote_count: PropTypes.number,
+    }).isRequired
+  ).isRequired,
+  guestSessionId: PropTypes.string,
 }
 
 export default MovieList

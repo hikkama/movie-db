@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Pagination } from 'antd'
+import PropTypes from 'prop-types'
 
 import styles from './PaginationBlock.module.css'
 
@@ -34,6 +35,12 @@ function PaginationBlock({ search = '', results, changePages }) {
       />
     </div>
   )
+}
+
+PaginationBlock.propTypes = {
+  search: PropTypes.string,
+  results: PropTypes.number.isRequired,
+  changePages: PropTypes.func.isRequired,
 }
 
 export default PaginationBlock
