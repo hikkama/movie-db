@@ -13,12 +13,14 @@ import './App.css'
 function App() {
   const [movies, setMovies] = useState([])
   const [ratedMovies, setRatedMovies] = useState([])
+  const [ratedMoviesResults, setRatedMoviesResults] = useState(0)
   const [isLoading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const [results, setResults] = useState(0)
   const [search, setSearch] = useState('return')
   const [genres, setGenres] = useState([])
   const [guestSession, setGuestSession] = useState(null)
+  const [ratedPage, setRatedPage] = useState(1)
 
   useEffect(() => {
     getMovies(search)
@@ -45,6 +47,17 @@ function App() {
       .catch((error) => setError(error))
   }
 
+  const changeRatedPagesHandler = (page) => {
+    setLoading(true)
+    getRatedMovies(guestSession, page)
+      .then((movies) => {
+        setRatedMovies(movies.results)
+        setLoading(false)
+        setRatedPage(page)
+      })
+      .catch((error) => setError(error))
+  }
+
   const searchMoviesHandler = (query) => {
     setSearch(query)
 
@@ -67,6 +80,21 @@ function App() {
     return <Alert message={error.message} description="Description" type="error" showIcon />
   }
 
+  const tabsOnChangeHandler = (activeKey) => {
+    if (activeKey === 'rated') {
+      if (!guestSession) {
+        return
+      }
+      getRatedMovies(guestSession, ratedPage)
+        .then((movies) => {
+          setRatedMovies(movies.results)
+          setRatedMoviesResults(movies.total_results)
+          setLoading(false)
+        })
+        .catch((error) => setError(error))
+    }
+  }
+
   const searchComponent = (
     <>
       <SearchMovie searchMovies={searchMoviesHandler} />
@@ -75,21 +103,14 @@ function App() {
     </>
   )
 
-  const ratedComponent = !ratedMovies.length ? <h1>Rate films</h1> : <MovieList movies={ratedMovies} />
-
-  const tabsOnChangeHandler = (activeKey) => {
-    if (activeKey === 'rated') {
-      if (!guestSession) {
-        return
-      }
-      getRatedMovies(guestSession)
-        .then((movies) => {
-          setRatedMovies(movies.results)
-          setLoading(false)
-        })
-        .catch((error) => setError(error))
-    }
-  }
+  const ratedComponent = (
+    <>
+      {!ratedMovies.length ? <h1>Rate films</h1> : <MovieList movies={ratedMovies} />}
+      {ratedMoviesResults > 19 && (
+        <PaginationBlock changePages={changeRatedPagesHandler} results={ratedMoviesResults} />
+      )}
+    </>
+  )
 
   const items = [
     { label: 'Search', key: 'search', children: searchComponent },

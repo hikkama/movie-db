@@ -3,8 +3,13 @@ import { Pagination } from 'antd'
 
 import styles from './PaginationBlock.module.css'
 
-function PaginationBlock({ search, results, changePages }) {
+function PaginationBlock({ search = '', results, changePages }) {
   const [current, setCurrent] = useState(1)
+
+  const onChangeRated = (page) => {
+    changePages(page)
+    setCurrent(page)
+  }
 
   const onChange = (page, search) => {
     changePages(search, page)
@@ -19,7 +24,11 @@ function PaginationBlock({ search, results, changePages }) {
         size="small"
         current={current}
         onChange={(e) => {
-          onChange(e, search)
+          if (!search) {
+            onChangeRated(e)
+          } else {
+            onChange(e, search)
+          }
         }}
         total={results}
       />

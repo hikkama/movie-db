@@ -35,7 +35,7 @@
         "indent": ["error", 2],
         "max-len": "off",
         "react/jsx-props-no-spreading": "off",
-        "prettier/prettier": "error",
+        "prettier/prettier": "warn",
         "linebreak-style": [0, "unix"],
         "quotes": ["error", "single"],
         "semi": ["error", "never"],

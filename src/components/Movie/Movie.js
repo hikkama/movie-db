@@ -24,6 +24,7 @@ function Movie({ title, date, tags, overview, poster, vote, id, guestSessionId, 
       rateMovie(id, rating, guestSessionId)
         .then((res) => res)
         .catch((error) => console.error(error))
+      sessionStorage.setItem(id, rating)
     }
   }, [rating])
 
@@ -43,7 +44,7 @@ function Movie({ title, date, tags, overview, poster, vote, id, guestSessionId, 
         </div>
         <p className={styles.cardText}>{shortenText(overview)}</p>
         <Rate
-          value={userRating || rating}
+          value={userRating || rating || +sessionStorage.getItem(id)}
           onChange={(event) => {
             setRating(event)
           }}

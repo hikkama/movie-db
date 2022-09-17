@@ -60,10 +60,10 @@ export async function rateMovie(movieId, rate, guestSessionId) {
   }
 }
 
-export async function getRatedMovies(guestSessionId) {
+export async function getRatedMovies(guestSessionId, page = 1) {
   try {
     const response = await axios.get(
-      `${apiBase}guest_session/${guestSessionId}/rated/movies?api_key=${apiKey}&language=en-US`
+      `${apiBase}guest_session/${guestSessionId}/rated/movies?api_key=${apiKey}&language=en-US&page=${page}`
     )
     return response.data
   } catch (error) {
