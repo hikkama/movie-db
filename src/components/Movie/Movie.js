@@ -7,7 +7,7 @@ import formatDate from '../../utils/formatDate'
 import Genre from '../Genre'
 import { rateMovie } from '../../services/movie-api'
 import Context from '../MovieDbContext'
-import coverImg from '../../img/AvgrHw6YEehlNxVZNVDoVz2Huht.jpg'
+import coverImg from '../../img/noposter.jpg'
 
 import styles from './Movie.module.css'
 
@@ -58,9 +58,7 @@ function Movie({
         <p className={styles.cardText}>{shortenText(overview)}</p>
         <Rate
           value={userRating || rating || +sessionStorage.getItem(id)}
-          onChange={(event) => {
-            setRating(event)
-          }}
+          onChange={setRating}
           className={styles.cardRate}
           count={10}
           allowHalf

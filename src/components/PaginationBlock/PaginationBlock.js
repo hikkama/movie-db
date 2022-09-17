@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { Pagination } from 'antd'
 import PropTypes from 'prop-types'
+import { Pagination } from 'antd'
 
 import styles from './PaginationBlock.module.css'
 

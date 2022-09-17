@@ -14,8 +14,7 @@ import './App.css'
  *       - Add better design when no result in search /\ DONE
  *       - Поправить спинер при загрузке /\ DONE
  *       - Убирать pagination когда нет страниц /\ DONE
- *       - Проверить все файлы
- *       - Проверить дизайн и ТЗ
+ *       - Проверить все файлы /\ DONE
  *       - Сделать адаптацию
  */
 function App() {

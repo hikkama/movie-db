@@ -2,11 +2,6 @@ import axios from 'axios'
 
 const apiBase = 'https://api.themoviedb.org/3/'
 const apiKey = '8760b047c11ca2728369a82a322e1944'
-// https://api.themoviedb.org/3/search/movie
-// ?api_key=8760b047c11ca2728369a82a322e1944&language=en-US&query=return&page=1&include_adult=false
-// const client = axios.create({
-//   baseURL: 'https://api.themoviedb.org/3/search/movie?api_key=8760b047c11ca2728369a82a322e1944&language=en-US&query=',
-// })
 
 export async function getMovies(query) {
   try {
