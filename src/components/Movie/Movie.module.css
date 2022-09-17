@@ -9,6 +9,7 @@
 }
 
 img.cardImg {
+  width: 183px;
   height: 100%;
 }
 
@@ -65,4 +66,45 @@ ul.cardRate {
 }
 .green {
   border-color: #66e900;
+}
+
+@media (max-width: 640px) {
+  .card {
+    height: auto;
+    position: relative;
+    display: block;
+  }
+
+  img.cardImg {
+    width: 60px;
+    position: absolute;
+    height: auto;
+    left: 10px;
+  }
+  
+  .cardInfo {
+    padding: 6px 10px 0 10px;
+    margin-top: -18px;
+  }
+
+  .cardTitle {
+    padding-left: 83px;
+  }
+
+  .cardDate {
+    padding-left: 83px;
+  }
+
+  .cardTags {
+    padding-left: 83px;
+    margin-bottom: 15px;
+  }
+
+  ul.cardRate {
+    font-size: 15px;
+    margin: 7px 0;
+
+    display: flex;
+    justify-content: end;
+  }
 }

@@ -47,12 +47,11 @@ function Movie({
         className={styles.cardImg}
         src={poster ? `https://image.tmdb.org/t/p/w500${poster}` : coverImg}
         alt={title}
-        width={183}
       />
       <div className={styles.cardInfo}>
         <h2 className={styles.cardTitle}>{title}</h2>
         <h3 className={styles.cardDate}>{formatDate(date)}</h3>
-        <div>
+        <div className={styles.cardTags}>
           <Genre genreIds={tags} />
         </div>
         <p className={styles.cardText}>{shortenText(overview)}</p>
