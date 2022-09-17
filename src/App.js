@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Spin, Alert, Tabs } from 'antd'
 
 import { getMovies, getPage, getGenres, createGuestSession, getRatedMovies } from './services/movie-api'
@@ -27,40 +27,40 @@ function App() {
   // Search with return query, create guest session & get genres from api at the mounting of app
   useEffect(() => {
     getMovies(search)
-      .then((movies) => {
-        setMovies(movies.results)
-        setResults(movies.total_results)
+      .then((res) => {
+        setMovies(res.results)
+        setResults(res.total_results)
         setLoading(false)
       })
-      .catch((error) => setError(error))
+      .catch((err) => setError(err))
 
     createGuestSession().then((res) => setGuestSession(res.guest_session_id))
-    getGenres().then(({ genres }) => setGenres(genres))
+    getGenres().then((res) => setGenres(res.genres))
   }, [])
 
   if (error) {
     return <Alert message={error.message} description="Description" type="error" showIcon />
   }
 
-  const changePagesHandler = (search, page) => {
+  const changePagesHandler = (searchQuery, page) => {
     setLoading(true)
     getPage(search, page)
-      .then((movies) => {
-        setMovies(movies.results)
+      .then((res) => {
+        setMovies(res.results)
         setLoading(false)
       })
-      .catch((error) => setError(error))
+      .catch((err) => setError(err))
   }
 
   const changeRatedPagesHandler = (page) => {
     setLoading(true)
     getRatedMovies(guestSession, page)
-      .then((movies) => {
-        setRatedMovies(movies.results)
+      .then((res) => {
+        setRatedMovies(res.results)
         setLoading(false)
         setRatedPage(page)
       })
-      .catch((error) => setError(error))
+      .catch((err) => setError(err))
   }
 
   const searchMoviesHandler = (query) => {
@@ -72,12 +72,12 @@ function App() {
 
     setLoading(true)
     getMovies(query)
-      .then((movies) => {
-        setMovies(movies.results)
-        setResults(movies.total_results)
+      .then((res) => {
+        setMovies(res.results)
+        setResults(res.total_results)
         setLoading(false)
       })
-      .catch((error) => setError(error))
+      .catch((err) => setError(err))
   }
 
   const tabsOnChangeHandler = (activeKey) => {
@@ -87,12 +87,12 @@ function App() {
       }
 
       getRatedMovies(guestSession, ratedPage)
-        .then((movies) => {
-          setRatedMovies(movies.results)
-          setRatedMoviesResults(movies.total_results)
+        .then((res) => {
+          setRatedMovies(res.results)
+          setRatedMoviesResults(res.total_results)
           setLoading(false)
         })
-        .catch((error) => setError(error))
+        .catch((err) => setError(err))
     }
   }
 
@@ -120,8 +120,10 @@ function App() {
     { label: 'Rated', key: 'rated', children: ratedComponent },
   ]
 
+  const contextProviderValue = useMemo(() => ({ genres }), [genres])
+
   return (
-    <Context.Provider value={{ genres }}>
+    <Context.Provider value={contextProviderValue}>
       <div className="container">
         <Tabs onChange={tabsOnChangeHandler} centered defaultActiveKey="1" items={tabsItems} />
       </div>

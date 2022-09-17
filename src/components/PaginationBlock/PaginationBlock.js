@@ -11,8 +11,8 @@ function PaginationBlock({ search = '', results, changePages }) {
     setCurrent(page)
   }
 
-  const onChange = (page, search) => {
-    changePages(search, page)
+  const onChange = (page, searchQuery) => {
+    changePages(searchQuery, page)
     setCurrent(page)
   }
 

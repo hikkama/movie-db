@@ -7,7 +7,7 @@ function SearchMovie({ searchMovies }) {
 
   const debounceFn = useCallback(debounce(searchMovies, 1000), [])
 
-  function handleChange(event) {
+  const handleChange = (event) => {
     setInputValue(event.target.value)
     debounceFn(event.target.value)
   }

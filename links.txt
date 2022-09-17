@@ -9,3 +9,5 @@ https://github.com/voronkov1988/MovieDB
 4. query - https://api.themoviedb.org/3/search/movie?api_key=8760b047c11ca2728369a82a322e1944&language=en-US&query=return
 
 5. Offline plugin - https://github.com/rgommezz/react-native-offline
+
+6. https://stackoverflow.com/questions/71233273/the-object-passed-as-the-value-prop-to-the-context-provider-changes-every-render

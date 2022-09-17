@@ -40,14 +40,10 @@
         "quotes": ["error", "single"],
         "semi": ["error", "never"],
         "react/react-in-jsx-scope": "off",
-        "react/prop-types": 0,//
-        "react/jsx-no-bind": 0,//
-        "react/jsx-no-constructed-context-values": 0,//
+        "react/prop-types": 0,
         "react/require-default-props": [2, {
             "functions": "defaultArguments"
         }],
-        "camelcase": "off",//
-        "no-shadow": "off",//
         "import/no-unresolved": [2, { "caseSensitive": false }],
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
         "import/order": [

@@ -8,17 +8,26 @@ function MovieList({ movies, guestSessionId }) {
   return movies.length ? (
     <div className={styles.movieList}>
       {movies.map((movie) => {
-        const { title, release_date, genre_ids, overview, poster_path, id, vote_average, rating } = movie
+        const {
+          title,
+          release_date: releaseDate,
+          genre_ids: genreIds,
+          overview,
+          poster_path: posterPath,
+          id,
+          vote_average: voteAverage,
+          rating,
+        } = movie
         return (
           <Movie
             title={title}
-            date={release_date}
-            tags={genre_ids}
+            date={releaseDate}
+            tags={genreIds}
             overview={overview}
-            poster={poster_path}
+            poster={posterPath}
             key={id}
             id={id}
-            vote={vote_average}
+            vote={voteAverage}
             guestSessionId={guestSessionId}
             userRating={rating}
           />
