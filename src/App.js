@@ -9,14 +9,7 @@ import Context from './components/MovieDbContext'
 
 import 'antd/dist/antd.min.css'
 import './App.css'
-/*
- * Todo: - Add better design when no rated films /\ DONE
- *       - Add better design when no result in search /\ DONE
- *       - Поправить спинер при загрузке /\ DONE
- *       - Убирать pagination когда нет страниц /\ DONE
- *       - Проверить все файлы /\ DONE
- *       - Сделать адаптацию
- */
+
 function App() {
   const [movies, setMovies] = useState([])
   const [results, setResults] = useState(0)
