@@ -12,16 +12,19 @@ import './App.css'
 
 function App() {
   const [movies, setMovies] = useState([])
+  const [results, setResults] = useState(0)
   const [ratedMovies, setRatedMovies] = useState([])
   const [ratedMoviesResults, setRatedMoviesResults] = useState(0)
-  const [isLoading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
-  const [results, setResults] = useState(0)
-  const [search, setSearch] = useState('return')
-  const [genres, setGenres] = useState([])
-  const [guestSession, setGuestSession] = useState(null)
   const [ratedPage, setRatedPage] = useState(1)
 
+  const [isLoading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
+  const [guestSession, setGuestSession] = useState(null)
+
+  const [search, setSearch] = useState('return')
+  const [genres, setGenres] = useState([])
+
+  // Search with return query, create guest session & get genres from api at the mounting of app
   useEffect(() => {
     getMovies(search)
       .then((movies) => {
@@ -30,12 +33,14 @@ function App() {
         setLoading(false)
       })
       .catch((error) => setError(error))
-  }, [])
 
-  useEffect(() => {
     createGuestSession().then((res) => setGuestSession(res.guest_session_id))
     getGenres().then(({ genres }) => setGenres(genres))
   }, [])
+
+  if (error) {
+    return <Alert message={error.message} description="Description" type="error" showIcon />
+  }
 
   const changePagesHandler = (search, page) => {
     setLoading(true)
@@ -66,7 +71,6 @@ function App() {
     }
 
     setLoading(true)
-
     getMovies(query)
       .then((movies) => {
         setMovies(movies.results)
@@ -76,15 +80,12 @@ function App() {
       .catch((error) => setError(error))
   }
 
-  if (error) {
-    return <Alert message={error.message} description="Description" type="error" showIcon />
-  }
-
   const tabsOnChangeHandler = (activeKey) => {
     if (activeKey === 'rated') {
       if (!guestSession) {
         return
       }
+
       getRatedMovies(guestSession, ratedPage)
         .then((movies) => {
           setRatedMovies(movies.results)
@@ -99,7 +100,9 @@ function App() {
     <>
       <SearchMovie searchMovies={searchMoviesHandler} />
       {isLoading ? <Spin size="large" /> : <MovieList movies={movies} guestSessionId={guestSession} />}
-      <PaginationBlock changePages={changePagesHandler} search={search} results={results} />
+      {ratedMoviesResults > 19 && (
+        <PaginationBlock changePages={changePagesHandler} search={search} results={results} />
+      )}
     </>
   )
 
@@ -112,7 +115,7 @@ function App() {
     </>
   )
 
-  const items = [
+  const tabsItems = [
     { label: 'Search', key: 'search', children: searchComponent },
     { label: 'Rated', key: 'rated', children: ratedComponent },
   ]
@@ -120,7 +123,7 @@ function App() {
   return (
     <Context.Provider value={{ genres }}>
       <div className="container">
-        <Tabs onChange={tabsOnChangeHandler} centered defaultActiveKey="1" items={items} />
+        <Tabs onChange={tabsOnChangeHandler} centered defaultActiveKey="1" items={tabsItems} />
       </div>
     </Context.Provider>
   )
