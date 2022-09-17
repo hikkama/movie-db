@@ -140,7 +140,14 @@ function App() {
 
   if (error) {
     return (
-      <Alert message="Please refresh the page and try again later" description={error.message} type="error" showIcon />
+      <div className="container">
+        <Alert
+          message="Please refresh the page and try again later"
+          description={error.message}
+          type="error"
+          showIcon
+        />
+      </div>
     )
   }
 
