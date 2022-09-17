@@ -10,3 +10,9 @@ body {
   padding: 20px 30px;
   box-sizing: border-box;
 }
+
+.spin-wrapper {
+  margin: 20px auto 0;
+  display: flex;
+  justify-content: center;
+}

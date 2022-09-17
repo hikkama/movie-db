@@ -9,7 +9,15 @@ import Context from './components/MovieDbContext'
 
 import 'antd/dist/antd.min.css'
 import './App.css'
-
+/*
+ * Todo: - Add better design when no rated films /\ DONE
+ *       - Add better design when no result in search /\ DONE
+ *       - Поправить спинер при загрузке /\ DONE
+ *       - Убирать pagination когда нет страниц /\ DONE
+ *       - Проверить все файлы
+ *       - Проверить дизайн и ТЗ
+ *       - Сделать адаптацию
+ */
 function App() {
   const [movies, setMovies] = useState([])
   const [results, setResults] = useState(0)
@@ -99,14 +107,24 @@ function App() {
   const searchComponent = (
     <>
       <SearchMovie searchMovies={searchMoviesHandler} />
-      {isLoading ? <Spin size="large" /> : <MovieList movies={movies} guestSessionId={guestSession} />}
-      <PaginationBlock changePages={changePagesHandler} search={search} results={results} />
+      {isLoading ? (
+        <div className="spin-wrapper">
+          <Spin size="large" />
+        </div>
+      ) : (
+        <MovieList movies={movies} guestSessionId={guestSession} />
+      )}
+      {results > 19 && <PaginationBlock changePages={changePagesHandler} search={search} results={results} />}
     </>
   )
 
   const ratedComponent = (
     <>
-      {!ratedMovies.length ? <h1>Rate films</h1> : <MovieList movies={ratedMovies} />}
+      {!ratedMovies.length ? (
+        <Alert description="Here will be your rated films" type="info" showIcon />
+      ) : (
+        <MovieList movies={ratedMovies} />
+      )}
       {ratedMoviesResults > 19 && (
         <PaginationBlock changePages={changeRatedPagesHandler} results={ratedMoviesResults} />
       )}

@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Alert } from 'antd'
 
 import Movie from '../Movie'
 
@@ -36,7 +37,9 @@ function MovieList({ movies, guestSessionId = '' }) {
       })}
     </div>
   ) : (
-    <h1>No results</h1>
+    <div className={styles.alertWrapper}>
+      <Alert message="Warning" description="There is no result on this query" type="warning" showIcon />
+    </div>
   )
 }
 
