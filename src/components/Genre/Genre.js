@@ -8,17 +8,16 @@ import styles from './Genre.module.css'
 
 function Genre({ genreIds }) {
   const { genres } = useContext(Context)
-
   const filtered = genreIds.map((id) => genres.find((item) => item.id === id))
-  if (!filtered) {
-    return null
-  }
 
-  return filtered.map((tag) => (
-    <Tag className={styles.cardTag} key={tag.id}>
-      {tag.name}
-    </Tag>
-  ))
+  return filtered.map(
+    (tag) =>
+      tag && (
+        <Tag className={styles.cardTag} key={tag.id}>
+          {tag.name}
+        </Tag>
+      )
+  )
 }
 
 Genre.propTypes = {

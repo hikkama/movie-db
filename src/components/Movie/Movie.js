@@ -25,12 +25,16 @@ function Movie({
   const [rating, setRating] = useState(null)
   const { errorHandler } = useContext(Context)
 
-  let voteClass = styles.vote
+  const voteClassHandler = (rate) => {
+    let voteClass = styles.vote
 
-  if (vote <= 3) voteClass += ` ${styles.red}`
-  if (vote > 3 && vote <= 5) voteClass += ` ${styles.orange}`
-  if (vote > 5 && vote <= 7) voteClass += ` ${styles.yellow}`
-  if (vote > 7) voteClass += ` ${styles.green}`
+    if (rate <= 3) voteClass += ` ${styles.red}`
+    if (rate > 3 && rate <= 5) voteClass += ` ${styles.orange}`
+    if (rate > 5 && rate <= 7) voteClass += ` ${styles.yellow}`
+    if (rate > 7) voteClass += ` ${styles.green}`
+
+    return voteClass
+  }
 
   useEffect(() => {
     if (rating) {
@@ -62,7 +66,7 @@ function Movie({
           count={10}
           allowHalf
         />
-        <div className={voteClass}>{vote.toString().length === 1 ? `${vote}.0` : vote.toFixed(1)}</div>
+        <div className={voteClassHandler(vote)}>{vote.toString().length === 1 ? `${vote}.0` : vote.toFixed(1)}</div>
       </div>
     </div>
   )
