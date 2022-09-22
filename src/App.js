@@ -34,65 +34,70 @@ function App() {
       })
       .catch((err) => setError(err))
 
-    createGuestSession().then((res) => setGuestSession(res.guest_session_id))
-    getGenres().then((res) => setGenres(res.genres))
+    createGuestSession()
+      .then((res) => setGuestSession(res.guest_session_id))
+      .catch((err) => setError(err))
+    getGenres()
+      .then((res) => setGenres(res.genres))
+      .catch((err) => setError(err))
   }, [])
 
   const errorHandler = (e) => {
     setError(e)
   }
 
-  const changePagesHandler = (searchQuery, page) => {
+  const changePagesHandler = async (searchQuery, page) => {
     setLoading(true)
-    getPage(search, page)
-      .then((res) => {
-        setMovies(res.results)
-        setLoading(false)
-      })
-      .catch((err) => setError(err))
-  }
-
-  const changeRatedPagesHandler = (page) => {
-    setLoading(true)
-    getRatedMovies(guestSession, page)
-      .then((res) => {
-        setRatedMovies(res.results)
-        setLoading(false)
-        setRatedPage(page)
-      })
-      .catch((err) => setError(err))
-  }
-
-  const searchMoviesHandler = (query) => {
-    setSearch(query)
-
-    if (!query) {
-      return
+    try {
+      const res = await getPage(search, page)
+      setMovies(res.results)
+    } catch (e) {
+      setError(e)
+    } finally {
+      setLoading(false)
     }
-
-    setLoading(true)
-    getMovies(query)
-      .then((res) => {
-        setMovies(res.results)
-        setResults(res.total_results)
-        setLoading(false)
-      })
-      .catch((err) => setError(err))
   }
 
-  const tabsOnChangeHandler = (activeKey) => {
-    if (activeKey === 'rated') {
-      if (!guestSession) {
-        return
-      }
+  const changeRatedPagesHandler = async (page) => {
+    setLoading(true)
+    try {
+      const res = await getRatedMovies(guestSession, page)
+      setRatedMovies(res.results)
+      setRatedPage(page)
+    } catch (e) {
+      setError(e)
+    } finally {
+      setLoading(false)
+    }
+  }
 
-      getRatedMovies(guestSession, ratedPage)
-        .then((res) => {
-          setRatedMovies(res.results)
-          setRatedMoviesResults(res.total_results)
-          setLoading(false)
-        })
-        .catch((err) => setError(err))
+  const searchMoviesHandler = async (query) => {
+    setSearch(query)
+    if (!query) return
+    setLoading(true)
+
+    try {
+      const res = await getMovies(query)
+      setMovies(res.results)
+      setResults(res.total_results)
+    } catch (e) {
+      setError(e)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const changeTabsHandler = async (activeKey) => {
+    if (activeKey !== 'rated' || !guestSession) return
+
+    try {
+      const res = await getRatedMovies(guestSession, ratedPage)
+      setRatedMovies(res.results)
+      setRatedMoviesResults(res.total_results)
+    } catch (e) {
+      setError(e)
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -146,7 +151,7 @@ function App() {
   return (
     <Context.Provider value={contextProviderValue}>
       <div className="container">
-        <Tabs onChange={tabsOnChangeHandler} centered defaultActiveKey="1" items={tabsItems} />
+        <Tabs onChange={changeTabsHandler} centered defaultActiveKey="1" items={tabsItems} />
       </div>
     </Context.Provider>
   )

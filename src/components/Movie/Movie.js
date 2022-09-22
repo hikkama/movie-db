@@ -37,18 +37,11 @@ function Movie({
   }
 
   useEffect(() => {
-    if (!rating) {
-      return
-    }
+    if (!rating) return
 
-    ;(async () => {
-      try {
-        await rateMovie(id, rating, guestSessionId)
-      } catch (e) {
-        errorHandler(e)
-      }
-      return sessionStorage.setItem(id, rating)
-    })()
+    rateMovie(id, rating, guestSessionId).catch((e) => errorHandler(e))
+
+    sessionStorage.setItem(id, rating)
   }, [rating])
 
   return (
