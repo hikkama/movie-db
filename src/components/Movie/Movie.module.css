@@ -50,7 +50,7 @@ ul.cardRate {
   margin: 7px 0;
 }
 
-.vote {
+.voteRating {
   width: 40px;
   position: absolute;
   top: 0;
@@ -78,11 +78,25 @@ ul.cardRate {
   border-color: #66e900;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 940px) {
+  .card {
+    height: auto;
+    display: block;
+    overflow: unset;
+    text-align: center;
+    padding-top: 20px;
+  }
+  .cardTags {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 440px) {
   .card {
     height: auto;
     position: relative;
     display: block;
+    text-align: left;
   }
 
   img.cardImg {
@@ -108,6 +122,7 @@ ul.cardRate {
   .cardTags {
     padding-left: 83px;
     margin-bottom: 15px;
+    justify-content: start;
   }
 
   ul.cardRate {

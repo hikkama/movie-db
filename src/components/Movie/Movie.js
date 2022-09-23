@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Image, Rate } from 'antd'
+import classNames from 'classnames'
 
 import shortenText from '../../utils/shortenText'
 import formatDate from '../../utils/formatDate'
@@ -26,14 +27,17 @@ function Movie({
   const { errorHandler } = useContext(Context)
 
   const voteClassHandler = (rate) => {
-    let voteClass = styles.vote
+    const { voteRating, red, orange, yellow, green } = styles
 
-    if (rate <= 3) voteClass += ` ${styles.red}`
-    if (rate > 3 && rate <= 5) voteClass += ` ${styles.orange}`
-    if (rate > 5 && rate <= 7) voteClass += ` ${styles.yellow}`
-    if (rate > 7) voteClass += ` ${styles.green}`
+    const voteClasses = classNames({
+      [voteRating]: true,
+      [red]: rate <= 3,
+      [orange]: rate > 3 && rate <= 5,
+      [yellow]: rate > 5 && rate <= 7,
+      [green]: rate > 7,
+    })
 
-    return voteClass
+    return voteClasses
   }
 
   useEffect(() => {
