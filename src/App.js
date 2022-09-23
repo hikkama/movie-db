@@ -12,7 +12,7 @@ import './App.css'
 
 function App() {
   const [movies, setMovies] = useState([])
-  const [results, setResults] = useState(0)
+  const [resultsMovies, setResultsMovies] = useState(0)
   const [ratedMovies, setRatedMovies] = useState([])
   const [ratedMoviesResults, setRatedMoviesResults] = useState(0)
   const [ratedPage, setRatedPage] = useState(1)
@@ -29,7 +29,7 @@ function App() {
     getMovies(search)
       .then((res) => {
         setMovies(res.results)
-        setResults(res.total_results)
+        setResultsMovies(res.total_results)
         setLoading(false)
       })
       .catch((err) => setError(err))
@@ -49,8 +49,8 @@ function App() {
   const changePagesHandler = async (searchQuery, page) => {
     setLoading(true)
     try {
-      const res = await getPage(search, page)
-      setMovies(res.results)
+      const { results } = await getPage(search, page)
+      setMovies(results)
     } catch (e) {
       setError(e)
     } finally {
@@ -61,8 +61,8 @@ function App() {
   const changeRatedPagesHandler = async (page) => {
     setLoading(true)
     try {
-      const res = await getRatedMovies(guestSession, page)
-      setRatedMovies(res.results)
+      const { results } = await getRatedMovies(guestSession, page)
+      setRatedMovies(results)
       setRatedPage(page)
     } catch (e) {
       setError(e)
@@ -79,7 +79,7 @@ function App() {
     try {
       const res = await getMovies(query)
       setMovies(res.results)
-      setResults(res.total_results)
+      setResultsMovies(res.total_results)
     } catch (e) {
       setError(e)
     } finally {
@@ -112,7 +112,9 @@ function App() {
       ) : (
         <MovieList movies={movies} guestSessionId={guestSession} />
       )}
-      {results > 19 && <PaginationBlock changePages={changePagesHandler} search={search} results={results} />}
+      {resultsMovies > 19 && (
+        <PaginationBlock changePages={changePagesHandler} search={search} results={resultsMovies} />
+      )}
     </>
   )
 
