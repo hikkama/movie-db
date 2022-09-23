@@ -89,6 +89,7 @@ function App() {
 
   const changeTabsHandler = async (activeKey) => {
     if (activeKey !== 'rated' || !guestSession) return
+    setLoading(true)
 
     try {
       const res = await getRatedMovies(guestSession, ratedPage)
@@ -115,12 +116,20 @@ function App() {
     </>
   )
 
+  const ratedMovieListHandler = !ratedMovies.length ? (
+    <Alert description="Here will be your rated films" type="info" showIcon />
+  ) : (
+    <MovieList movies={ratedMovies} guestSessionId={guestSession} />
+  )
+
   const ratedComponent = (
     <>
-      {!ratedMovies.length ? (
-        <Alert description="Here will be your rated films" type="info" showIcon />
+      {isLoading ? (
+        <div className="spin-wrapper">
+          <Spin size="large" />
+        </div>
       ) : (
-        <MovieList movies={ratedMovies} />
+        ratedMovieListHandler
       )}
       {ratedMoviesResults > 19 && (
         <PaginationBlock changePages={changeRatedPagesHandler} results={ratedMoviesResults} />

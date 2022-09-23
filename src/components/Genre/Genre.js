@@ -13,10 +13,8 @@ function Genre({ genreIds }) {
   return filtered.map(
     (tag) =>
       tag && (
-        <li>
-          <Tag className={styles.cardTag} key={tag.id}>
-            {tag.name}
-          </Tag>
+        <li key={tag.id}>
+          <Tag className={styles.cardTag}>{tag.name}</Tag>
         </li>
       )
   )
