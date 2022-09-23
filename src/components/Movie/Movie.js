@@ -53,10 +53,10 @@ function Movie({
       />
       <div className={styles.cardInfo}>
         <h2 className={styles.cardTitle}>{title}</h2>
-        <h3 className={styles.cardDate}>{formatDate(date)}</h3>
-        <div className={styles.cardTags}>
+        <time className={styles.cardDate}>{formatDate(date)}</time>
+        <ul className={styles.cardTags}>
           <Genre genreIds={tags} />
-        </div>
+        </ul>
         <p className={styles.cardText}>{shortenText(overview)}</p>
         <Rate
           value={userRating || rating || +sessionStorage.getItem(id)}
